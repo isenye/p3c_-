@@ -5,7 +5,6 @@
 # response = urllib.request.urlopen('https://www.python.org')
 # print(response.read().decode('UTF-8')) 打印玩野html源码
 # print(type(response)) 打印返回的数据类型
-
 ''' 打印HTTPResponse的属性和方法
 print(response.status)
 print(response.getheaders())
@@ -58,4 +57,30 @@ data = bytes(parse.urlencode(dict1), encoding='utf-8')
 req = request.Request(url=url, data=data, headers=headers, method='POST')
 response = request.urlopen(req)
 print(response.read().decode('utf-8'))
+'''
+# 03.01、异常处理URLError实例
+''''from urllib import request, error
+try:
+    response = request.urlopen('https://cuiqingcai.com/index.htm')
+except error.URLError as e:
+    print(e.reason)
+'''
+# 03.02、HTTPError
+''''from urllib import request, error
+try:
+    response = request.urlopen('https://cuiqingcai.com/index.htm')
+except error.HTTPError as e:
+    print(e.reason, e.code, e.headers, sep='\n')
+'''
+# 03.03、先捕获子类再捕获父类
+'''
+from urllib import request, error
+try:
+    response = request.urlopen('https://www.cuiqingcai.com/index.htm')
+except error.HTTPError as e:
+    print(e.reason, e.code, e.headers, sep='\n')
+except error.URLError as e:
+    print(e.reason)
+else:
+    print('Request Successful')
 '''
